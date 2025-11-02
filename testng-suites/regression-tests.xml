@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Regression Test Suite" parallel="tests" thread-count="2" verbose="1">
+    <parameter name="env" value="testing"/>
+    <parameter name="browser" value="chrome"/>
+
+    <listeners>
+        <listener class-name="com.pharmacy.automation.listeners.TestListener"/>
+        <listener class-name="com.pharmacy.automation.listeners.ExtentReportListener"/>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+
+    <test name="Login Tests">
+        <classes>
+            <class name="com.pharmacy.automation.tests.LoginTests"/>
+        </classes>
+    </test>
+
+    <test name="Product Tests">
+        <classes>
+            <class name="com.pharmacy.automation.tests.ProductTests"/>
+        </classes>
+    </test>
+
+    <test name="Order Tests">
+        <classes>
+            <class name="com.pharmacy.automation.tests.OrderTests"/>
+        </classes>
+    </test>
+
+    <test name="Prescription Tests">
+        <classes>
+            <class name="com.pharmacy.automation.tests.PrescriptionTests"/>
+        </classes>
+    </test>
+</suite>

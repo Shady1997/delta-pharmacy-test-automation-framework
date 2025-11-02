@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Firefox Parallel Execution Suite" parallel="tests" thread-count="2" verbose="1">
+    <parameter name="env" value="testing"/>
+    <parameter name="browser" value="firefox"/>
+
+    <listeners>
+        <listener class-name="com.pharmacy.automation.listeners.TestListener"/>
+        <listener class-name="com.pharmacy.automation.listeners.ExtentReportListener"/>
+    </listeners>
+
+    <test name="Firefox - Login Tests">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.pharmacy.automation.tests.LoginTests"/>
+        </classes>
+    </test>
+
+    <test name="Firefox - Product Tests">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="com.pharmacy.automation.tests.ProductTests"/>
+        </classes>
+    </test>
+</suite>

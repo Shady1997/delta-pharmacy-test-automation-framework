@@ -1,0 +1,49 @@
+{
+"products": [
+{
+"id": 1,
+"name": "Paracetamol 500mg",
+"description": "Pain relief and fever reducer",
+"price": 5.99,
+"stockQuantity": 100,
+"category": "Pain Relief",
+"manufacturer": "Pharma Corp"
+},
+{
+"id": 2,
+"name": "Ibuprofen 400mg",
+"description": "Anti-inflammatory pain reliever",
+"price": 8.50,
+"stockQuantity": 75,
+"category": "Pain Relief",
+"manufacturer": "MediCare"
+},
+{
+"id": 3,
+"name": "Amoxicillin 500mg",
+"description": "Antibiotic for bacterial infections",
+"price": 12.99,
+"stockQuantity": 50,
+"category": "Antibiotics",
+"manufacturer": "BioPharm"
+},
+{
+"id": 4,
+"name": "Vitamin C 1000mg",
+"description": "Immune system support",
+"price": 15.00,
+"stockQuantity": 200,
+"category": "Vitamins",
+"manufacturer": "HealthPlus"
+},
+{
+"id": 5,
+"name": "Aspirin 100mg",
+"description": "Blood thinner and pain relief",
+"price": 4.50,
+"stockQuantity": 150,
+"category": "Pain Relief",
+"manufacturer": "Pharma Corp"
+}
+]
+}

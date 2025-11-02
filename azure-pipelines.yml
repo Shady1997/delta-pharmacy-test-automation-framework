@@ -1,0 +1,100 @@
+# azure-pipelines.yml
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+      - feature/*
+
+pr:
+  branches:
+    include:
+      - main
+      - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
+  MAVEN_OPTS: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
+
+stages:
+  - stage: Build
+    displayName: 'Build Stage'
+    jobs:
+      - job: BuildJob
+        displayName: 'Maven Build'
+        steps:
+          - task: JavaToolInstaller@0
+            inputs:
+              versionSpec: '17'
+              jdkArchitectureOption: 'x64'
+              jdkSourceOption: 'PreInstalled'
+
+          - task: Cache@2
+            inputs:
+              key: 'maven | "$(Agent.OS)" | **/pom.xml'
+              restoreKeys: maven | "$(Agent.OS)"
+              path: $(MAVEN_CACHE_FOLDER)
+            displayName: 'Cache Maven packages'
+
+          - task: Maven@3
+            inputs:
+              mavenPomFile: 'pom.xml'
+              goals: 'clean install'
+              options: '-DskipTests'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.17'
+            displayName: 'Maven Build'
+
+  - stage: SmokeTests
+    displayName: 'Smoke Tests'
+    dependsOn: Build
+    jobs:
+      - job: SmokeTestJob
+        displayName: 'Run Smoke Tests'
+        steps:
+          - task: Maven@3
+            inputs:
+              mavenPomFile: 'pom.xml'
+              goals: 'test'
+              options: '-DsuiteXmlFile=testng-suites/smoke-tests.xml -Dbrowser=chrome -Dheadless=true'
+              publishJUnitResults: true
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.17'
+            displayName: 'Execute Smoke Tests'
+
+          - task: PublishTestResults@2
+            condition: always()
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+            displayName: 'Publish Test Results'
+
+          - task: PublishBuildArtifacts@1
+            condition: always()
+            inputs:
+              PathtoPublish: 'test-output'
+              ArtifactName: 'test-results'
+            displayName: 'Publish Test Artifacts'
+
+  - stage: RegressionTests
+    displayName: 'Regression Tests'
+    dependsOn: SmokeTests
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: RegressionTestJob
+        displayName: 'Run Regression Tests'
+        steps:
+          - task: Maven@3
+            inputs:
+              mavenPomFile: 'pom.xml'
+              goals: 'test'
+              options: '-DsuiteXmlFile=testng-suites/regression-tests.xml -Dbrowser=chrome -Dheadless=true'
+              publishJUnitResults: true
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+              javaHomeOption: 'JDKVersion'
+              jdkVersionOption: '1.17'
+            displayName: 'Execute Regression Tests'

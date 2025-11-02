@@ -1,0 +1,79 @@
+# bitbucket-pipelines.yml
+image: maven:3.9-openjdk-17
+
+definitions:
+  caches:
+    maven-cache: ~/.m2/repository
+
+pipelines:
+  default:
+    - step:
+        name: Build
+        caches:
+          - maven-cache
+        script:
+          - mvn clean install -DskipTests
+        artifacts:
+          - target/**
+
+    - step:
+        name: Smoke Tests
+        caches:
+          - maven-cache
+        script:
+          - mvn test -DsuiteXmlFile=testng-suites/smoke-tests.xml -Dbrowser=chrome -Dheadless=true
+        artifacts:
+          - target/surefire-reports/**
+          - target/allure-results/**
+          - test-output/**
+
+  branches:
+    main:
+      - step:
+          name: Build
+          caches:
+            - maven-cache
+          script:
+            - mvn clean install -DskipTests
+
+      - parallel:
+          - step:
+              name: Smoke Tests
+              script:
+                - mvn test -DsuiteXmlFile=testng-suites/smoke-tests.xml -Dbrowser=chrome -Dheadless=true
+
+          - step:
+              name: Sanity Tests
+              script:
+                - mvn test -DsuiteXmlFile=testng-suites/sanity-tests.xml -Dbrowser=chrome -Dheadless=true
+
+      - step:
+          name: Regression Tests
+          script:
+            - mvn test -DsuiteXmlFile=testng-suites/regression-tests.xml -Dbrowser=chrome -Dheadless=true
+          artifacts:
+            - target/allure-results/**
+
+      - step:
+          name: Generate Reports
+          script:
+            - mvn allure:report
+          artifacts:
+            - target/site/allure-maven-plugin/**
+
+  custom:
+    smoke-only:
+      - step:
+          name: Smoke Tests Only
+          caches:
+            - maven-cache
+          script:
+            - mvn clean test -DsuiteXmlFile=testng-suites/smoke-tests.xml
+
+    e2e-only:
+      - step:
+          name: E2E Tests Only
+          caches:
+            - maven-cache
+          script:
+            - mvn clean test -DsuiteXmlFile=testng-suites/e2e-tests.xml

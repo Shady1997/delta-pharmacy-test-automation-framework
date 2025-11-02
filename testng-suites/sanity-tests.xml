@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Sanity Test Suite" verbose="1">
+    <parameter name="env" value="testing"/>
+    <parameter name="browser" value="chrome"/>
+
+    <listeners>
+        <listener class-name="com.pharmacy.automation.listeners.TestListener"/>
+        <listener class-name="com.pharmacy.automation.listeners.ExtentReportListener"/>
+    </listeners>
+
+    <test name="Sanity Tests">
+        <classes>
+            <class name="com.pharmacy.automation.tests.LoginTests">
+                <methods>
+                    <include name="testValidLogin"/>
+                    <include name="testInvalidLogin"/>
+                </methods>
+            </class>
+            <class name="com.pharmacy.automation.tests.ProductTests">
+                <methods>
+                    <include name="testProductSearch"/>
+                    <include name="testAddToCart"/>
+                </methods>
+            </class>
+            <class name="com.pharmacy.automation.tests.OrderTests">
+                <methods>
+                    <include name="testOrderCreationWithCash"/>
+                    <include name="testOrderStatus"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

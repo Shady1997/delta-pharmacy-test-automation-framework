@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Chrome Parallel Execution Suite" parallel="tests" thread-count="3" verbose="1">
+    <parameter name="env" value="testing"/>
+    <parameter name="browser" value="chrome"/>
+
+    <listeners>
+        <listener class-name="com.pharmacy.automation.listeners.TestListener"/>
+        <listener class-name="com.pharmacy.automation.listeners.ExtentReportListener"/>
+    </listeners>
+
+    <test name="Chrome - Login Tests" parallel="methods" thread-count="2">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.pharmacy.automation.tests.LoginTests"/>
+        </classes>
+    </test>
+
+    <test name="Chrome - Product Tests" parallel="methods" thread-count="2">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.pharmacy.automation.tests.ProductTests"/>
+        </classes>
+    </test>
+
+    <test name="Chrome - Order Tests" parallel="methods" thread-count="2">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.pharmacy.automation.tests.OrderTests"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,82 @@
+image: maven:3.9-openjdk-17
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+
+cache:
+  paths:
+    - .m2/repository
+    - target/
+
+stages:
+  - build
+  - test
+  - report
+
+build:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS clean install -DskipTests
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 hour
+
+smoke-tests:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test -DsuiteXmlFile=testng-suites/smoke-tests.xml -Dbrowser=chrome -Dheadless=true
+  artifacts:
+    when: always
+    paths:
+      - target/surefire-reports/
+      - target/allure-results/
+      - test-output/
+    expire_in: 1 week
+  only:
+    - merge_requests
+    - main
+    - develop
+
+regression-tests:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test -DsuiteXmlFile=testng-suites/regression-tests.xml -Dbrowser=chrome -Dheadless=true
+  artifacts:
+    when: always
+    paths:
+      - target/surefire-reports/
+      - target/allure-results/
+      - test-output/
+    expire_in: 1 week
+  only:
+    - main
+    - develop
+  when: manual
+
+e2e-tests:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test -DsuiteXmlFile=testng-suites/e2e-tests.xml -Dbrowser=chrome -Dheadless=true
+  artifacts:
+    when: always
+    paths:
+      - target/allure-results/
+      - test-output/
+    expire_in: 1 week
+  only:
+    - main
+  when: manual
+
+allure-report:
+  stage: report
+  script:
+    - mvn allure:report
+  artifacts:
+    paths:
+      - target/site/allure-maven-plugin/
+    expire_in: 30 days
+  only:
+    - main
+    - develop
