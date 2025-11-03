@@ -1,0 +1,32 @@
+{
+"admin": {
+"email": "admin@pharmacy.com",
+"password": "admin123",
+"fullName": "Admin User",
+"role": "ADMIN"
+},
+"pharmacist": {
+"email": "pharmacist@pharmacy.com",
+"password": "pharma123",
+"fullName": "Pharmacist User",
+"role": "PHARMACIST"
+},
+"customer": {
+"email": "customer@example.com",
+"password": "customer123",
+"fullName": "John Customer",
+"role": "CUSTOMER"
+},
+"testUser1": {
+"email": "test1@test.com",
+"password": "test123",
+"fullName": "Test User One",
+"role": "CUSTOMER"
+},
+"testUser2": {
+"email": "test2@test.com",
+"password": "test456",
+"fullName": "Test User Two",
+"role": "CUSTOMER"
+}
+}

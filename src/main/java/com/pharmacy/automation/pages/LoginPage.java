@@ -7,8 +7,8 @@ import org.openqa.selenium.By;
 
 public class LoginPage extends BasePage {
 
-    private final By emailField = By.id("email");
-    private final By passwordField = By.id("password");
+    private final By emailField = By.xpath("(//input)[1]");
+    private final By passwordField = By.xpath("(//input)[2]");
     private final By loginButton = By.xpath("//button[contains(text(),'Login') or contains(text(),'Sign In')]");
     private final By errorMessage = By.cssSelector(".error-message, .alert-danger");
     private final By emailValidation = By.xpath("//input[@id='email']/following-sibling::span");

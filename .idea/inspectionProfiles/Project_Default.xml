@@ -4,13 +4,18 @@
     <inspection_tool class="groupsTestNG" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="groups">
         <value>
-          <list size="6">
+          <list size="11">
             <item index="0" class="java.lang.String" itemvalue="regression" />
             <item index="1" class="java.lang.String" itemvalue="smoke" />
             <item index="2" class="java.lang.String" itemvalue="negative" />
             <item index="3" class="java.lang.String" itemvalue="admin" />
             <item index="4" class="java.lang.String" itemvalue="pharmacist" />
             <item index="5" class="java.lang.String" itemvalue="security" />
+            <item index="6" class="java.lang.String" itemvalue="e2e" />
+            <item index="7" class="java.lang.String" itemvalue="payment" />
+            <item index="8" class="java.lang.String" itemvalue="comprehensive" />
+            <item index="9" class="java.lang.String" itemvalue="communication" />
+            <item index="10" class="java.lang.String" itemvalue="order-tracking" />
           </list>
         </value>
       </option>

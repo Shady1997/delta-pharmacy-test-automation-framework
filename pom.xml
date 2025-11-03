@@ -19,12 +19,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependency Versions -->
-        <selenium.version>4.16.1</selenium.version>
+        <selenium.version>4.35.0</selenium.version>
         <testng.version>7.8.0</testng.version>
         <cucumber.version>7.15.0</cucumber.version>
         <allure.version>2.25.0</allure.version>
         <extentreports.version>5.1.1</extentreports.version>
-        <webdrivermanager.version>5.6.3</webdrivermanager.version>
+        <webdrivermanager.version>6.3.2</webdrivermanager.version>
         <javafaker.version>1.0.2</javafaker.version>
         <jackson.version>2.16.1</jackson.version>
         <log4j.version>2.22.1</log4j.version>

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.monte.media.Format;
 import org.monte.media.Registry;
+import org.monte.media.math.Rational;
 import org.monte.screenrecorder.ScreenRecorder;
 
 import java.awt.*;

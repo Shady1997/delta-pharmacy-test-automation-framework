@@ -277,25 +277,25 @@ public class DriverFactory {
                 case FrameworkConstants.NETWORK_SLOW_2G:
                     networkConditions.setDownloadThroughput(50 * 1024); // 50 Kbps
                     networkConditions.setUploadThroughput(20 * 1024);   // 20 Kbps
-                    networkConditions.setLatency(2000);                  // 2000ms
+                    networkConditions.setLatency(Duration.ofSeconds(2000));                  // 2000ms
                     break;
 
                 case FrameworkConstants.NETWORK_2G:
                     networkConditions.setDownloadThroughput(250 * 1024);
                     networkConditions.setUploadThroughput(50 * 1024);
-                    networkConditions.setLatency(300);
+                    networkConditions.setLatency(Duration.ofSeconds(2000));
                     break;
 
                 case FrameworkConstants.NETWORK_3G:
                     networkConditions.setDownloadThroughput(750 * 1024);
                     networkConditions.setUploadThroughput(250 * 1024);
-                    networkConditions.setLatency(100);
+                    networkConditions.setLatency(Duration.ofSeconds(100));
                     break;
 
                 case FrameworkConstants.NETWORK_4G:
                     networkConditions.setDownloadThroughput(4 * 1024 * 1024);
                     networkConditions.setUploadThroughput(3 * 1024 * 1024);
-                    networkConditions.setLatency(20);
+                    networkConditions.setLatency(Duration.ofSeconds(20));
                     break;
 
                 default:
